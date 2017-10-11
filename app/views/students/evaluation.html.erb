@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <%= image_tag "http://res.cloudinary.com/du5cam6dp/image/upload/v1505217667/jpg_yzwzgh.jpg", class: "img-rounded img-responsive" %>
+                    </div>
+                    <div class="col-sm-6 col-md-8" style="height: 158.33px;">
+                        <h4><%= @student.full_name %></h4>
+                        <p>
+                            <i class="glyphicon glyphicon-education"></i>Batch <%= @student.batch %>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"></i>June 02, 1988
+                            <br />
+                            <div style="position: absolute; bottom: 0">
+                              <% @student.color.each do |color| %>
+                                <div style="width: 25px; height: 25px; background: <%= color %>; float: left; margin-left: 1px; "></div>
+                              <% end %>
+                            </div>
+                        </p>
+                        <!-- Split button -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<!-- form -->
+</div>
+<div class="container">
+  <div class="row">
+    <p>Daily evaluation for <%= DateTime.now.to_date %></p>
+    <%= form_for [@group, @student] do |f| %>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>test</label><br />
+          <%= f.radio_button :color, 'red' %>
+          <%= f.radio_button :color, 'orange' %>
+          <%= f.radio_button :color, 'green' %>
+        </div>
+
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Remark</label><br />
+          <%= f.text_area :remark, class: "form-control", rows: "5" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

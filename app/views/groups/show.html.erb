@@ -1,0 +1,23 @@
+
+<div class="container">
+    <div class="row">
+      <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <h1 class="gallery-title">BATCH <%= @group.batch %></h1>
+      </div>
+      <% @students.each do |student| %>
+        <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+          <div class="list-group">
+            <%= link_to "#{student.full_name}", { group_id: @group.id, id: student.id, controller: 'students', action: 'evaluation' }, class: "list-group-item active" %>
+
+            <%= image_tag "http://res.cloudinary.com/du5cam6dp/image/upload/v1505217667/jpg_yzwzgh.jpg", style: 'width: 100%' %>
+            <span class="list-group-item list-group-item-action" style="border: 0; background: <%= student.color.last %>" ><%= student.color.last %></span>
+            <%= link_to "Edit student", edit_group_student_path(@group.id, student.id), class: "list-group-item list-group-item-action" %>
+            <%= link_to "Remove student", group_student_path(@group.id, student.id), method: :delete, data: { confirm: "Are you sure?" }, class: "list-group-item list-group-item-action" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%= link_to "Back", root_path %>
+    <%= link_to "Add student", new_group_student_path(@group.id) %>
+</div>
