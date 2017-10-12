@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: [:edit, :destroy, :update, :evaluation]
-  before_action :set_group, only: [:edit, :destroy, :update, :evaluation]
+  before_action :set_group, only: [:new, :edit, :destroy, :update, :evaluation]
 
   def new
     @student = Student.new
@@ -31,6 +31,10 @@ class StudentsController < ApplicationController
 
   end
 
+  def random
+
+  end
+
   def destroy
     redirect_to group_path(@group.id) if(@student.destroy)
   end
@@ -47,7 +51,7 @@ class StudentsController < ApplicationController
 
 
   def student_params
-      params.require(:student).permit(:full_name, :image, :color, :batch, :group_id)
+      params.require(:student).permit(:full_name, :image, :batch, :group_id, {color: []})
   end
 
 

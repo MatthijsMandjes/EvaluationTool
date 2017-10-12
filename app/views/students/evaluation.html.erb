@@ -34,10 +34,10 @@
     <%= form_for [@group, @student] do |f| %>
       <div class="col-xs-6">
         <div class="form-group">
-          <label>test</label><br />
-          <%= f.radio_button :color, 'red' %>
-          <%= f.radio_button :color, 'orange' %>
-          <%= f.radio_button :color, 'green' %>
+          <label>Colors</label><br />
+
+          <%= f.text_field :color, multiple: true %>
+
         </div>
 
       </div>
@@ -47,6 +47,7 @@
           <%= f.text_area :remark, class: "form-control", rows: "5" %>
         </div>
       </div>
+      <%= f.submit 'Save' %>
     <% end %>
   </div>
 </div>
