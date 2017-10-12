@@ -1,0 +1,22 @@
+
+<div class="container">
+    <h1>Ask a question to</h1>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <%= image_tag "http://res.cloudinary.com/du5cam6dp/image/upload/v1505217667/jpg_yzwzgh.jpg", class: "img-rounded img-responsive" %>
+                    </div>
+                    <div class="col-sm-6 col-md-8" style="height: 158.33px;">
+                        <h1 style="line-height: 120px;"><%= @random_student.full_name %></h1>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <%= link_to "Back", group_path(@group.id)%>
+    <%= link_to "Ask a question", { group_id: @group.id, controller: 'students', action: 'random' }%>
+</div>

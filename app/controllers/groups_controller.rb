@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
-    @students = Student.where(group_id: @group.id)
+    @students = Student.where(group_id: @group.id).order(:updated_at)
   end
 
   private

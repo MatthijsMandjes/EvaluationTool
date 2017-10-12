@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'groups#index'
 
   get '/groups/:group_id/students/:id/evaluation', to: 'students#evaluation'
-  get '/groups/:group_id/random_student', to: 'students#random'
+  get '/groups/:group_id/random', to: 'students#random'
   resources :groups do
     resources :students do
       collection do
