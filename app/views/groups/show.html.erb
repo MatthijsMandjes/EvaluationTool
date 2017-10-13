@@ -1,34 +1,19 @@
 
 <div class="container">
-  <h1><%= @count_students  %> </h1>
-  <div class="row">
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="<%= @green %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @green %>%; background: green;">
-            </div>
-            <span class="progress-type">Green</span>
-            <span class="progress-completed"><%= @green %>%</span>
-        </div>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: <%= @yellow %>%; background: yellow">
-            </div>
-            <span class="progress-type">Yellow</span>
-            <span class="progress-completed"><%= @yellow %>%</span>
-        </div>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: <%= @red %>%; background: red">
-            </div>
-            <span class="progress-type">Red</span>
-            <span class="progress-completed"><%= @red %>%</span>
-        </div>
+  <div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: <%= @green %>%; background: green" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"><%= @green %>%</div>
+  <div class="progress-bar" role="progressbar" style="width: <%= @yellow %>%; background: yellow" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"><%= @yellow %>%</div>
+  <div class="progress-bar" role="progressbar" style="width: <%= @red %>%; background: red" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"><%= @red %>%</div>
+</div>
 
-	</div>
 
 
 
     <div class="row">
       <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <h1 class="gallery-title">BATCH <%= @group.batch %></h1>
-          <%= link_to "Ask question to random student", { group_id: @group.id, controller: 'students', action: 'random' }%>
+
+          <%= link_to "Ask question to random student", { group_id: @group.id, controller: 'students', action: 'random' }, class: "btn btn-success", style: "margin-top: 15px; margin-bottom: 15px;" %>
       </div>
       <% @students.each do |student| %>
         <% @color = Evaluation.where(student_id: student.id).pluck(:color).last %>
@@ -46,6 +31,6 @@
       <% end %>
     </div>
 
-    <%= link_to "Back", root_path %>
-    <%= link_to "Add student", new_group_student_path(@group.id) %>
+    <%= link_to "Back", root_path, class: "btn btn-primary" %>
+    <%= link_to "Add student", new_group_student_path(@group.id), class: "btn btn-primary" %>
 </div>

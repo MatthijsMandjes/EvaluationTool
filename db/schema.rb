@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171013003148) do
+ActiveRecord::Schema.define(version: 20171013082948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20171013003148) do
     t.datetime "updated_at", null: false
     t.string "color"
     t.date "evaluation_at"
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_evaluations_on_group_id"
     t.index ["student_id"], name: "index_evaluations_on_student_id"
   end
 
@@ -62,6 +64,7 @@ ActiveRecord::Schema.define(version: 20171013003148) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "evaluations", "groups"
   add_foreign_key "evaluations", "students"
   add_foreign_key "students", "groups"
 end

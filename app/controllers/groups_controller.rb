@@ -24,15 +24,22 @@ class GroupsController < ApplicationController
     @students = Student.where(group_id: @group.id).order(updated_at: :desc)
     @evaluations = Evaluation.all
 
-    @count_students = Student.where(group_id: @group.id).count
-    @count_green = Student.where(last_color: "green").count
-    @green = Float(@count_students) / @count_green * 10
 
-    @count_yellow = Student.where(last_color: "yellow").count
-    @yellow = Float(@count_students) / @count_yellow * 10
+      @count_students = Student.where(group_id: @group.id).where("last_color IS NOT NULL").count
+      if(@count_students != 0)
+        @to_percentage = 100 / @count_students
 
-    @count_red = Student.where(last_color: "red").count
-    @red = Float(@count_students) / @count_red * 10
+        @count_green = Student.where(last_color: "green", group_id: @group.id).count
+        @green = (Float(@to_percentage) * @count_green)
+
+        @count_yellow = Student.where(last_color: "yellow", group_id: @group.id).count
+        @yellow = (Float(@to_percentage) * @count_yellow)
+
+        @count_red = Student.where(last_color: "red", group_id: @group.id).count
+        @red = (Float(@to_percentage) * @count_red)
+      end
+
+      
 
   end
 
