@@ -1,17 +1,44 @@
 
 <div class="container">
+  <h1><%= @count_students  %> </h1>
+  <div class="row">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="<%= @green %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @green %>%; background: green;">
+            </div>
+            <span class="progress-type">Green</span>
+            <span class="progress-completed"><%= @green %>%</span>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: <%= @yellow %>%; background: yellow">
+            </div>
+            <span class="progress-type">Yellow</span>
+            <span class="progress-completed"><%= @yellow %>%</span>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: <%= @red %>%; background: red">
+            </div>
+            <span class="progress-type">Red</span>
+            <span class="progress-completed"><%= @red %>%</span>
+        </div>
+
+	</div>
+
+
+
     <div class="row">
       <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <h1 class="gallery-title">BATCH <%= @group.batch %></h1>
           <%= link_to "Ask question to random student", { group_id: @group.id, controller: 'students', action: 'random' }%>
       </div>
       <% @students.each do |student| %>
+        <% @color = Evaluation.where(student_id: student.id).pluck(:color).last %>
+        <% @color ||= "grey" %>
         <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
           <div class="list-group">
-            <%= link_to "#{student.full_name}", { group_id: @group.id, id: student.id, controller: 'students', action: 'evaluation' }, class: "list-group-item active" %>
+            <%= link_to "#{student.full_name}", new_student_evaluation_path(student.id), class: "list-group-item active" %>
 
-            <%= image_tag "http://res.cloudinary.com/du5cam6dp/image/upload/v1505217667/jpg_yzwzgh.jpg", style: 'width: 100%' %>
-            <span class="list-group-item list-group-item-action" style="border: 0; background: <%= student.color.last %>" ><%= student.color.last %></span>
+            <%= image_tag student.image, style: 'width: 100%' %>
+            <span class="list-group-item list-group-item-action" style="border: 0; background: <%= @color %>" ><%= @color == "grey" ? "Not yet evaluated" : @color %></span>
             <%= link_to "Edit student", edit_group_student_path(@group.id, student.id), class: "list-group-item list-group-item-action" %>
             <%= link_to "Remove student", group_student_path(@group.id, student.id), method: :delete, data: { confirm: "Are you sure?" }, class: "list-group-item list-group-item-action" %>
           </div>

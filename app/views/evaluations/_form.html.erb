@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <p>Daily evaluation for <%= DateTime.now.to_date %></p>
+    <%= form_for [@student, @evaluation] do |f| %>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Colors</label><br />
+          <%= f.select :color, options_for_select([["Select One", ""], "green", "yellow", "red"]) %>
+
+          <%#= f.text_field :color, value: nil %>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <label>Remark</label><br />
+          <%= f.text_area :remark, class: "form-control", rows: "3", style: "width: 75%" %>
+        </div>
+      </div>
+      <%= f.submit 'Save' %>
+      <%= f.submit 'Save and Next', name: "next" %>
+    <% end %>
+
+  </div>
+</div>
