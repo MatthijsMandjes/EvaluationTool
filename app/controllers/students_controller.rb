@@ -27,63 +27,44 @@ class StudentsController < ApplicationController
     end
   end
 
-  def evaluation_update
-    @current_date = Time.now.strftime("%Y-%m-%d")
-    @updated_at = @student.updated_at.strftime("%Y-%m-%d")
-    if(@updated_at != @current_date)
-
-      @colors = Student.where(id: @student.id).pluck(:color)
-      @form_color = params[:student][:color]
-      @colors[0] << @form_color
-
-      if @student.update_attributes(evaluation_params.merge(color: @colors[0]))
-        redirect_to group_path(@group.id)
-      else
-        render :edit
-      end
-
-    else
-      redirect_to request.referrer, notice: "You already created this evaluation"
-    end
-
-  end
-
-  def evaluation
-
-
-  end
-
   def random
-    loop do
-      @color_student = rand((0.0)..(1.0)).round(2)
-      if(@color_student >= 0 && @color_student <= 0.17)
-        @color = "green"
-      elsif(@color_student > 0.17 && @color_student <= 0.50)
-        @color = "yellow"
-      elsif(@color_student > 0.50 && @color_student <= 1)
-        @color = "red"
-      end
-      @check = Evaluation.where(color: @color)
-      if(@check.present?)
-        break
-      end
-    end
-
-    @student_ids = []
-    @students = Student.where(group_id: @group.id).pluck(:id)
-
-      @students.each do |id|
-        @check = Evaluation.where(student_id: id).pluck(:color).last
-
-        if @check == @color
-          @student_ids << id
+    @check = Evaluation.where(group_id: @group.id)
+    if(@check.present?)
+      loop do
+        @color_student = rand((0.0)..(1.0)).round(2)
+        if(@color_student >= 0 && @color_student <= 0.17)
+          @color = "green"
+        elsif(@color_student > 0.17 && @color_student <= 0.50)
+          @color = "yellow"
+        elsif(@color_student > 0.50 && @color_student <= 1)
+          @color = "red"
+        end
+        @check = Evaluation.where(color: @color, group_id: @group.id)
+        if(@check.present?)
+          break
         end
       end
 
-    @test = Student.where(id: @student_ids)
-    @random_student = @test.sample
+      @student_ids = []
+      @students = Student.where(group_id: @group.id).pluck(:id)
 
+        @students.each do |id|
+          @check = Evaluation.where(student_id: id).pluck(:color).last
 
+          if @check == @color
+            @student_ids << id
+          end
+        end
+
+      @student_list = Student.where(id: @student_ids)
+      @random_student = @student_list.sample
+
+    else
+      # no evaluations yet
+      @students = Student.where(group_id: @group.id).pluck(:id)
+      @student_list = Student.where(id: @students)
+      @random_student = @student_list.sample
+    end
   end
 
   def destroy
